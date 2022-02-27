@@ -1,5 +1,6 @@
 <?php
     include ('../config/config.php');
+    include ('../config/configMysql.php');
 ?>
 <!doctype html>
 <html lang="pt-br">
@@ -14,35 +15,24 @@
 <body>
     <section>
     <a href="<?php echo INCLUDE_PATHIN;?>index.php">Voltar</a>
+    <form class="contatos" method="POST">
         <div class="mb-3">
-            <label for="nome" class="form-label">Nome</label>
-            <input type="text" class="form-control" id="nome" placeholder="Nome">
-        </div>
-        <div class="mb-3">
+            <label for="nome" class="form-label" >Nome</label>
+            <input type="text" class="form-control" name="nome" placeholder="Nome" required>
             <label for="sobrenome" class="form-label">Sobrenome</label>
-            <input type="text" class="form-control" id="sobrenome" placeholder="Sobrenome">
-        </div>
-        <div class="mb-3">
+            <input type="text" class="form-control" name="sobrenome" placeholder="Sobrenome" required>
             <label for="telefone" class="form-label">Celular</label>
-            <input type="tel" class="form-control" id="telefone" placeholder="Celular 99-99999-9999">
-        </div>
-        <div class="mb-3">
+            <input type="tel" class="form-control" name="telefone" placeholder="Celular 99-99999-9999" required>
             <label for="email" class="form-label">Email</label>
-            <input type="email" class="form-control" id="email" placeholder="name@example.com">
+            <input type="email" class="form-control" name="email" placeholder="name@example.com" required>
         </div>
-        <!--<div class="mb-3">
-            <label for="exampleFormControlInput1" class="form-label">Email address</label>
-            <input type="date" class="form-control" id="cadastroDate">
-        </div>
-        <div class="mb-3">
-            <label for="exampleFormControlInput1" class="form-label">Email address</label>
-            <input type="date" class="form-control" id="cadastroAtualiza">
-        </div>-->
-        <div class="col-auto">
-            <button type="submit" class="btn btn-primary mb-3">Cadastrar</button>
-        </div>
-    </section>
+            <input type="submit" class="btn btn-primary mb-3" name="acao" value="Cadastrar" <?php cadastrarContatos($servername,$username,$password,$dbname,$_POST);?>/>
+            
+</form>
 
+    </section>
+    <script src="<?php echo INCLUDE_PATHIN;?>js/jquery.js"></script>
+    <script src="<?php echo INCLUDE_PATHIN;?>js/scripts.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 </body>
 
