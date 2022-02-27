@@ -1,6 +1,6 @@
 <?php
-    include ('config/config.php');
-    include ('config/configMysql.php');
+include('config/config.php');
+include('config/configMysql.php');
 ?>
 
 
@@ -15,22 +15,21 @@
 </head>
 
 <body>
-    <header>
+    <div class="container-fluid">
         <div>
-   <ul>
-    <li><a href="<?php echo INCLUDE_PATH;?>contatos.php">Cadastro de Contatos</a></li>
-    <li><a href="<?php echo INCLUDE_PATH;?>grupocontatos.php">Cadastro de Grupos</a></li>
-    <li><a href="<?php echo INCLUDE_PATH;?>eventos.php">Cadastro de Eventos</a></li>
-    </ul>
+            <?php
+            include 'pages/header.php';
+            ?>
         </div>
-   </header>   
-    <div>
-    <?php
-    include 'pages/home.php';
-    ?>
+        <div >
+            <?php
+            include 'pages/home.php';
+            ?>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+        </section>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-    </section>
 </body>
+
 
 </html>

@@ -13,8 +13,12 @@
 </head>
 
 <body>
-    <section>
-    <a href="<?php echo INCLUDE_PATHIN;?>index.php">Voltar</a>
+    <section class="container-fluid">
+    <div>
+        <?php
+        include 'header.php';
+        ?>
+    </div>
     <form class="contatos" method="POST">
         <div class="mb-3">
             <label for="nome" class="form-label" >Nome</label>
@@ -22,11 +26,11 @@
             <label for="sobrenome" class="form-label">Sobrenome</label>
             <input type="text" class="form-control" name="sobrenome" placeholder="Sobrenome" required>
             <label for="telefone" class="form-label">Celular</label>
-            <input type="tel" class="form-control" name="telefone" placeholder="Celular 99-99999-9999" required>
+            <input type="number" class="form-control" name="telefone" placeholder="Celular 55999999999" required>
             <label for="email" class="form-label">Email</label>
             <input type="email" class="form-control" name="email" placeholder="name@example.com" required>
         </div>
-            <input type="submit" class="btn btn-primary mb-3" name="acao" value="Cadastrar" <?php cadastrarContatos($servername,$username,$password,$dbname,$_POST);?>/>
+            <input type="submit" class="btn btn-primary mb-3" name="acao" value="Cadastrar Contato" <?php cadastrarContatos($servername,$username,$password,$dbname,$_POST);?>/>
             
 </form>
 

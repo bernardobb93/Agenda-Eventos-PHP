@@ -12,23 +12,19 @@
     <title>Cadastro de Grupo de Contatos</title>
 </head>
 <body>
-    <section>
-    <a href="<?php echo INCLUDE_PATHIN;?>index.php">Voltar</a>
+    <section class="container-fluid">
+    <div>
+        <?php
+        include 'header.php';
+        ?>
+    </div>
+        <form class="grupo"method="POST">
         <div class="mb-3">
             <label for="nome" class="form-label">Grupo de Contatos</label>
-            <input type="text" class="form-control" id="nomeGrupo" placeholder="Nome do Grupo">
+            <input type="text" class="form-control" name="nomeGrupo" placeholder="Nome do Grupo">
+            <input type="submit" class="btn btn-primary mb-1"name="acao"<?php cadastrarGrupo($servername,$username,$password,$dbname,$_POST);?>value="Cadastrar Grupo"/>
         </div>
-        <!--<div class="mb-3">
-            <label for="exampleFormControlInput1" class="form-label">Email address</label>
-            <input type="date" class="form-control" id="cadastroDate">
-        </div>
-        <div class="mb-3">
-            <label for="exampleFormControlInput1" class="form-label">Email address</label>
-            <input type="date" class="form-control" id="cadastroAtualiza">
-        </div>-->
-        <div class="col-auto">
-            <button type="submit" class="btn btn-primary mb-3">Cadastrar</button>
-        </div>
+        </form>
     </section>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
