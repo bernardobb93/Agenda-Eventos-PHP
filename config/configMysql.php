@@ -36,7 +36,7 @@ function tabelaContatos($servername, $username, $password, $dbname)
 function tabelaEventos($servername, $username, $password, $dbname)
 {
   echo "<table style='border: solid 1px black;'>";
-  echo "<tr><td >Eventos</td></tr><tr><td>Evento</td><td>Data</td><td>Hora</td><td>Email Evento</td> <td>Atualizar</td><td>Excluir</td></tr>";
+  echo "<tr><td >Eventos</td></tr><tr><td>Evento</td><td>Data</td><td>Hora</td><td>Email Evento</td><td>Data cadastro</td><td>Data Atualizção</td> <td>Atualizar</td><td>Excluir</td></tr>";
 
   $cx = mysqli_connect($servername, $username, $password);
 
@@ -50,6 +50,8 @@ function tabelaEventos($servername, $username, $password, $dbname)
     echo "<td >" . $aux["data_evento"] . "</td>";
     echo "<td >" . $aux["hora_evento"] . "</td>";
     echo "<td >" . $aux["email_evento"] . "</td>";
+    echo "<td >" . $aux["datac_evento"] . "</td>";
+    echo "<td >" . $aux["dataa_evento"] . "</td>";
     echo "<td >" . "<a href=pages/alterarevento.php?id_evento=" . $aux["id_evento"] . "&evento=" . $aux["evento"] . "&data=" . $aux["data_evento"] . "&hora=" . $aux["hora_evento"]."&email=" . $aux["email_evento"]. ">Alterar</a>" . "</td>";
     echo "<td >" . "<a href=pages/excluir.php?id_evento=" . $aux["id_evento"] . ">Excluir</a>". "</td>";
     echo "</tr>";
@@ -122,8 +124,10 @@ function cadastrarEvento($servername, $username, $password, $dbname)
     $data_evento = $_POST['dataEvento'];
     $hora_evento = $_POST['horaEvento'];
     $email_evento = $_POST['emailEvento'];
-    $sql = $pdo->prepare("INSERT INTO `evento` VALUES (null, ?, ?,?,?)");
-    $sql->execute(array($evento, $data_evento, $hora_evento,$email_evento));
+    $datac_evento = date('y-m-d h:i:s');
+    $dataa_evento = date('y-m-d h:i:s');
+    $sql = $pdo->prepare("INSERT INTO `evento` VALUES (null, ?, ?,?,?,?,?)");
+    $sql->execute(array($evento, $data_evento, $hora_evento,$email_evento,$datac_evento,$dataa_evento));
     header("Refresh:0; url=../index.php");
   }
 }
@@ -137,8 +141,9 @@ function alterarEvento($servername, $username, $password, $dbname)
     $data_evento = $_POST['data'];
     $hora_evento = $_POST['hora'];
     $email_evento = $_POST['email'];
+    $dataa_evento = date('y-m-d h:i:s');
     $id=$_POST['id_evento'];
-    $sql = $pdo->prepare("UPDATE `evento`SET evento='$evento',data_evento='$data_evento',hora_evento='$hora_evento',email_evento='$email_evento'  WHERE id_evento='$id'");
+    $sql = $pdo->prepare("UPDATE `evento`SET evento='$evento',data_evento='$data_evento',hora_evento='$hora_evento',email_evento='$email_evento',dataa_evento='$dataa_evento'  WHERE id_evento='$id'");
     if ($sql->execute()){
     header("Refresh:0; url=../index.php");
     }
