@@ -10,7 +10,7 @@ $dbname = "agenda";
 function tabelaContatos($servername, $username, $password, $dbname)
 {
   echo "<table style='border: solid 1px black;'>";
-  echo "<tr><td >Contatos</td></tr><tr><td>Nome</td><td>Sobrenome</td><td>Telefone</td> <td>Email</td><td>Data Cadastro</td> <td>Data Alteração</td><td>Atualizar</td></tr>";
+  echo "<tr><td >Contatos</td></tr><tr><td>Nome</td><td>Sobrenome</td><td>Telefone</td> <td>Email</td><td>Data Cadastro</td> <td>Data Alteração</td><td>Atualizar</td><td>Excluir</td></tr>";
 
   $cx = mysqli_connect($servername, $username, $password);
 
@@ -26,7 +26,8 @@ function tabelaContatos($servername, $username, $password, $dbname)
     echo "<td>" . $aux["email"] . "</td>";
     echo "<td >" . $aux["data_cadastro"] . "</td>";
     echo "<td >" . $aux["data_atualizacao"] . "</td>";
-    echo "<td >" . "<a href=pages/alterar.php?id=" . $aux["id"] . "&nome=" . $aux["nome"] . "&sobrenome=" . $aux["sobrenome"] . "&telefone=" . $aux["telefone"] . "&email=" . $aux["email"] . ">Alterar</a>" . "</td>";
+    echo "<td >" . "<a href=pages/alterar.php?id_contato=" . $aux["id"] . "&nome=" . $aux["nome"] . "&sobrenome=" . $aux["sobrenome"] . "&telefone=" . $aux["telefone"] . "&email=" . $aux["email"] . ">Alterar</a>" . "</td>";
+    echo "<td >" . "<a href=pages/excluirc.php?id_contato=" . $aux["id"] . ">Excluir</a>". "</td>";
     echo "</tr>";
   }
   echo "</table>";
@@ -59,23 +60,21 @@ function tabelaEventos($servername, $username, $password, $dbname)
 function tabelaGrupos($servername, $username, $password, $dbname)
 {
   echo "<table style='border: solid 1px black;'>";
-  echo "<tr><td >Contatos</td></tr><tr><td>Nome</td><td>Sobrenome</td><td>Telefone</td> <td>Email</td><td>Data Cadastro</td> <td>Data Alteração</td><td>Atualizar</td></tr>";
+  echo "<tr><td >Grupos</td></tr><tr><td>Grupo</td><td>Data Cadastro</td> <td>Data Alteração</td><td>Atualizar</td><td>Excluir</td></tr>";
 
   $cx = mysqli_connect($servername, $username, $password);
 
   $db = mysqli_select_db($cx, $dbname);
 
-  $sql = mysqli_query($cx, "SELECT * FROM contatos") or die(mysqli_error($cx));
+  $sql = mysqli_query($cx, "SELECT * FROM grupo") or die(mysqli_error($cx));
 
   while ($aux = mysqli_fetch_assoc($sql)) {
     echo "<tr >";
-    echo "<td >" . $aux["nome"] . "</td>";
-    echo "<td >" . $aux["sobrenome"] . "</td>";
-    echo "<td >" . $aux["telefone"] . "</td>";
-    echo "<td>" . $aux["email"] . "</td>";
-    echo "<td >" . $aux["data_cadastro"] . "</td>";
-    echo "<td >" . $aux["data_atualizacao"] . "</td>";
-    echo "<td >" . "<a href=pages/alterar.php?id=" . $aux["id"] . "&nome=" . $aux["nome"] . "&sobrenome=" . $aux["sobrenome"] . "&telefone=" . $aux["telefone"] . "&email=" . $aux["email"] . ">Alterar</a>" . "</td>";
+    echo "<td >" . $aux["nome_grupo"] . "</td>";
+    echo "<td >" . $aux["datac_grupo"] . "</td>";
+    echo "<td >" . $aux["dataa_grupo"] . "</td>";
+    echo "<td >" . "<a href=pages/alterargrupo.php?id_grupo=" . $aux["id_grupo"] ."&nome_grupo=". $aux["nome_grupo"] . ">Alterar</a>" . "</td>";
+    echo "<td >" . "<a href=pages/excluirg.php?id_grupo=" . $aux["id_grupo"] . ">Excluir</a>". "</td>";
     echo "</tr>";
   }
   echo "</table>";
@@ -128,6 +127,7 @@ function cadastrarEvento($servername, $username, $password, $dbname)
     header("Refresh:0; url=../index.php");
   }
 }
+
 function alterarEvento($servername, $username, $password, $dbname)
 {
   date_default_timezone_set('America/Sao_Paulo');
@@ -145,6 +145,7 @@ function alterarEvento($servername, $username, $password, $dbname)
     
   }
 }
+
 function excluirEvento($servername, $username, $password, $dbname,$id_evento)
 {
   date_default_timezone_set('America/Sao_Paulo');
@@ -158,4 +159,64 @@ function excluirEvento($servername, $username, $password, $dbname,$id_evento)
     
 }
 
+function excluirGrupo($servername, $username, $password, $dbname,$id_grupo)
+{
+  date_default_timezone_set('America/Sao_Paulo');
+  $pdo = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+     $id=$id_grupo;
+    $sql = $pdo->prepare("DELETE FROM `grupo`WHERE id_grupo=?");
+    if ($sql->execute(array($id))){
+    header("Refresh:0; url=../index.php");
+    
+    }
+    
+}
+
+function excluirContato($servername, $username, $password, $dbname,$id_contato)
+{
+  date_default_timezone_set('America/Sao_Paulo');
+  $pdo = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+     $id=$id_contato;
+    $sql = $pdo->prepare("DELETE FROM `contatos`WHERE id=?");
+    if ($sql->execute(array($id))){
+    header("Refresh:0; url=../index.php");
+    
+    }
+    
+}
+
+function alterarGrupo($servername, $username, $password, $dbname)
+{
+  date_default_timezone_set('America/Sao_Paulo');
+  $pdo = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+  if (isset($_POST['acao'])) {
+    $grupo = $_POST['nome_grupoa'];
+    $id=$_POST['id_grupo'];
+    $dataa_grupo = date('y-m-d h:i:s');
+    $sql = $pdo->prepare("UPDATE `grupo`SET nome_grupo='$grupo',dataa_grupo='$dataa_grupo' WHERE id_grupo='$id'");
+    if ($sql->execute()){
+    header("Refresh:0; url=../index.php");
+    }
+    
+  }
+}
+
+function alterarContato($servername, $username, $password, $dbname)
+{
+  date_default_timezone_set('America/Sao_Paulo');
+  $pdo = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+  if (isset($_POST['acao'])) {
+    $nome = $_POST['nome_contato'];
+    $sobrenome = $_POST['sobrenome_contato'];
+    $telefone = $_POST['telefone_contato'];
+    $email = $_POST['email_contato'];
+    $idc=$_POST['id_contato'];
+    $data_atualizacao = date('y-m-d h:i:s');
+    $sql = $pdo->prepare("UPDATE `contatos`SET nome='$nome',sobrenome='$sobrenome',telefone='$telefone',email='$email',data_atualizacao='$data_atualizacao' WHERE id='$idc'");
+    if ($sql->execute()){
+    header("Refresh:0; url=../index.php");
+    }
+    
+  }
+}
 ?>
