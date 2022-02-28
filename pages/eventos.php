@@ -21,13 +21,13 @@
     <form class="evento justify-content-center"  method="POST">
         <div class="mb-3">
             <label for="nome" class="form-label">Nome Evento</label>
-            <input type="text" class="form-control" name="nomeEvento" placeholder="Nome Evento">
+            <input type="text" class="form-control" name="nomeEvento" placeholder="Nome Evento" required>
             <label for="sobrenome" class="form-label">Data Evento</label>
-            <input type="date" class="form-control" name="dataEvento" placeholder="Data Evento">
+            <input type="date" class="form-control" name="dataEvento" placeholder="Data Evento" required>
             <label for="telefone" class="form-label">Hora Evento</label>
-            <input type="time" class="form-control" name="horaEvento" placeholder="Hora Evento">
+            <input type="time" class="form-control" name="horaEvento" placeholder="Hora Evento"required>
             <label for="email" class="form-label">Email</label>
-            <input type="email" class="form-control" name="email" placeholder="name@example.com">
+            <input type="email" class="form-control" name="emailEvento" placeholder="name@example.com"required>
             <input type="submit" class="btn btn-primary mb-3"name="acao"<?php cadastrarEvento($servername,$username,$password,$dbname,$_POST);?>value="Cadastrar Evento"/>
         </div>
     </form>

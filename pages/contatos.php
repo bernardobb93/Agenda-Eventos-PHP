@@ -26,11 +26,11 @@
             <label for="sobrenome" class="form-label">Sobrenome</label>
             <input type="text" class="form-control" name="sobrenome" placeholder="Sobrenome" required>
             <label for="telefone" class="form-label">Celular</label>
-            <input type="number" class="form-control" name="telefone" placeholder="Celular 55999999999" required>
+            <input type="text" class="form-control" name="telefone" placeholder="Celular 55999999999" pattern="[0-9]{11}"required>
             <label for="email" class="form-label">Email</label>
             <input type="email" class="form-control" name="email" placeholder="name@example.com" required>
         </div>
-            <input type="submit" class="btn btn-primary mb-3" name="acao" value="Cadastrar Contato" <?php cadastrarContatos($servername,$username,$password,$dbname,$_POST);?>/>
+            <input type="submit" class="btn btn-primary mb-3" name="acao" value="Cadastrar Contato" <?php cadastrarContatos($servername,$username,$password,$dbname,$_POST);?>>
             
 </form>
 

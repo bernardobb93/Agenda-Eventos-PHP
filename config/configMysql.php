@@ -1,3 +1,4 @@
+
 <?php
 $servername = "localhost";
 $username = "root";
@@ -9,132 +10,74 @@ $dbname = "agenda";
 function tabelaContatos($servername, $username, $password, $dbname)
 {
   echo "<table style='border: solid 1px black;'>";
-  echo "<tr'><th>CONTATOS</th></tr><tr><th>Nome</th><th>Sobrenome</th><th>Telefone</th><th>Email</th><th>Data de Cadastro</th><th>Data de Atualização</th><th>Atualizar</th></tr>";
+  echo "<tr><td >Contatos</td></tr><tr><td>Nome</td><td>Sobrenome</td><td>Telefone</td> <td>Email</td><td>Data Cadastro</td> <td>Data Alteração</td><td>Atualizar</td></tr>";
 
-  class TableRows extends RecursiveIteratorIterator
-  {
-    function __construct($it)
-    {
-      parent::__construct($it, self::LEAVES_ONLY);
-    }
+  $cx = mysqli_connect($servername, $username, $password);
 
-    function current()
-    {
-      return "<td style='width:150px;border:1px solid black;'>" . parent::current() . "</td>";
-    }
-    function beginChildren()
-    {
-      echo "<tr>";
-    }
+  $db = mysqli_select_db($cx, $dbname);
 
-    function endChildren()
-    {
-      echo "<th><a href='pages/alterar.php' id='<?php echo lastInsertId();?>'>Alterar</a>" . "</th></tr>" . "\n";
-    }
+  $sql = mysqli_query($cx, "SELECT * FROM contatos") or die(mysqli_error($cx));
+
+  while ($aux = mysqli_fetch_assoc($sql)) {
+    echo "<tr >";
+    echo "<td >" . $aux["nome"] . "</td>";
+    echo "<td >" . $aux["sobrenome"] . "</td>";
+    echo "<td >" . $aux["telefone"] . "</td>";
+    echo "<td>" . $aux["email"] . "</td>";
+    echo "<td >" . $aux["data_cadastro"] . "</td>";
+    echo "<td >" . $aux["data_atualizacao"] . "</td>";
+    echo "<td >" . "<a href=pages/alterar.php?id=" . $aux["id"] . "&nome=" . $aux["nome"] . "&sobrenome=" . $aux["sobrenome"] . "&telefone=" . $aux["telefone"] . "&email=" . $aux["email"] . ">Alterar</a>" . "</td>";
+    echo "</tr>";
   }
-
-  try {
-    $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
-    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $stmt = $conn->prepare("SELECT nome,sobrenome,telefone,email,data_cadastro,data_atualizacao FROM contatos");
-    $stmt->execute();
-
-    $result = $stmt->setFetchMode(PDO::FETCH_ASSOC);
-    foreach (new TableRows(new RecursiveArrayIterator($stmt->fetchAll())) as $k => $v) {
-      echo $v;
-    }
-  } catch (PDOException $e) {
-    echo "Error: " . $e->getMessage();
-  }
-  $conn = null;
   echo "</table>";
 }
 
 function tabelaEventos($servername, $username, $password, $dbname)
 {
   echo "<table style='border: solid 1px black;'>";
-  echo "<tr'><th>Eventos</th></tr><tr><th>Nome Evento</th><th>Data</th><th>Hora</th><th>Atualizar</th></tr>";
+  echo "<tr><td >Eventos</td></tr><tr><td>Evento</td><td>Data</td><td>Hora</td><td>Email Evento</td> <td>Atualizar</td><td>Excluir</td></tr>";
 
-  class TableEventRows extends RecursiveIteratorIterator
-  {
-    function __construct($it)
-    {
-      parent::__construct($it, self::LEAVES_ONLY);
-    }
+  $cx = mysqli_connect($servername, $username, $password);
 
-    function current()
-    {
-      return "<td style='width:150px;border:1px solid black;'>" . parent::current() . "</td>";
-    }
-    function beginChildren()
-    {
-      echo "<tr>";
-    }
+  $db = mysqli_select_db($cx, $dbname);
 
-    function endChildren()
-    {
-      echo "<th><input type='submit' class='btn btn-primary mb-3'name='acao'<?php echo 'teste'?>value='Alterar Evento'/>" . "</th></tr>" . "\n";
-    }
+  $sql = mysqli_query($cx, "SELECT * FROM evento") or die(mysqli_error($cx));
+
+  while ($aux = mysqli_fetch_assoc($sql)) {
+    echo "<tr >";
+    echo "<td >" . $aux["evento"] . "</td>";
+    echo "<td >" . $aux["data_evento"] . "</td>";
+    echo "<td >" . $aux["hora_evento"] . "</td>";
+    echo "<td >" . $aux["email_evento"] . "</td>";
+    echo "<td >" . "<a href=pages/alterarevento.php?id_evento=" . $aux["id_evento"] . "&evento=" . $aux["evento"] . "&data=" . $aux["data_evento"] . "&hora=" . $aux["hora_evento"]."&email=" . $aux["email_evento"]. ">Alterar</a>" . "</td>";
+    echo "<td >" . "<a href=pages/excluir.php?id_evento=" . $aux["id_evento"] . ">Excluir</a>". "</td>";
+    echo "</tr>";
   }
-
-  try {
-    $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
-    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $stmt = $conn->prepare("SELECT evento,data_evento,hora_evento FROM evento");
-    $stmt->execute();
-
-    $result = $stmt->setFetchMode(PDO::FETCH_ASSOC);
-    foreach (new TableRows(new RecursiveArrayIterator($stmt->fetchAll())) as $k => $v) {
-      echo $v;
-    }
-  } catch (PDOException $e) {
-    echo "Error: " . $e->getMessage();
-  }
-  $conn = null;
   echo "</table>";
 }
 
 function tabelaGrupos($servername, $username, $password, $dbname)
 {
   echo "<table style='border: solid 1px black;'>";
-  echo "<tr'><th>Grupos</th></tr><tr><th>Nome Evento</th><th>Data</th><th>Hora</th><th>Atualizar</th></tr>";
+  echo "<tr><td >Contatos</td></tr><tr><td>Nome</td><td>Sobrenome</td><td>Telefone</td> <td>Email</td><td>Data Cadastro</td> <td>Data Alteração</td><td>Atualizar</td></tr>";
 
-  class TableGrupoRows extends RecursiveIteratorIterator
-  {
-    function __construct($it3)
-    {
-      parent::__construct($it3, self::LEAVES_ONLY);
-    }
+  $cx = mysqli_connect($servername, $username, $password);
 
-    function current()
-    {
-      return "<td style='width:150px;border:1px solid black;'>" . parent::current() . "</td>";
-    }
-    function beginChildren()
-    {
-      echo "<tr>";
-    }
+  $db = mysqli_select_db($cx, $dbname);
 
-    function endChildren()
-    {
-      echo "<th><input type='submit' class='btn btn-primary mb-3'name='acao' value='Alterar Grupo'/>" . "</th></tr>" . "\n";
-    }
+  $sql = mysqli_query($cx, "SELECT * FROM contatos") or die(mysqli_error($cx));
+
+  while ($aux = mysqli_fetch_assoc($sql)) {
+    echo "<tr >";
+    echo "<td >" . $aux["nome"] . "</td>";
+    echo "<td >" . $aux["sobrenome"] . "</td>";
+    echo "<td >" . $aux["telefone"] . "</td>";
+    echo "<td>" . $aux["email"] . "</td>";
+    echo "<td >" . $aux["data_cadastro"] . "</td>";
+    echo "<td >" . $aux["data_atualizacao"] . "</td>";
+    echo "<td >" . "<a href=pages/alterar.php?id=" . $aux["id"] . "&nome=" . $aux["nome"] . "&sobrenome=" . $aux["sobrenome"] . "&telefone=" . $aux["telefone"] . "&email=" . $aux["email"] . ">Alterar</a>" . "</td>";
+    echo "</tr>";
   }
-
-  try {
-    $conn3 = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
-    $conn3->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $stmt3 = $conn3->prepare("SELECT nome_grupo,datac_grupo,dataa_grupo FROM grupo");
-    $stmt3->execute();
-
-    $result3 = $stmt3->setFetchMode(PDO::FETCH_ASSOC);
-    foreach (new TableGrupoRows(new RecursiveArrayIterator($stmt3->fetchAll())) as $k3 => $v3) {
-      echo $v3;
-    }
-  } catch (PDOException $e3) {
-    echo "Error: " . $e3->getMessage();
-  }
-  $conn3 = null;
   echo "</table>";
 }
 
@@ -153,7 +96,7 @@ function cadastrarContatos($servername, $username, $password, $dbname)
     $data_atualizacao = date('y-m-d h:i:s');
     $sql = $pdo->prepare("INSERT INTO `contatos` VALUES (null, ?, ?,?, ?,?,?)");
     $sql->execute(array($nome, $sobrenome, $telefone, $email, $data_cadastro, $data_atualizacao));
-    echo 'Contato inserido com sucesso!';
+    header("Refresh:0; url=../index.php");
   }
 }
 
@@ -167,7 +110,7 @@ function cadastrarGrupo($servername, $username, $password, $dbname)
     $dataa_grupo = date('y-m-d h:i:s');
     $sql = $pdo->prepare("INSERT INTO `grupo` VALUES (null, ?, ?,?)");
     $sql->execute(array($grupo, $datac_grupo, $dataa_grupo));
-    echo 'Grupo inserido com sucesso!';
+    header("Refresh:0; url=../index.php");
   }
 }
 
@@ -179,8 +122,40 @@ function cadastrarEvento($servername, $username, $password, $dbname)
     $evento = $_POST['nomeEvento'];
     $data_evento = $_POST['dataEvento'];
     $hora_evento = $_POST['horaEvento'];
-    $sql = $pdo->prepare("INSERT INTO `evento` VALUES (null, ?, ?,?)");
-    $sql->execute(array($evento, $data_evento, $hora_evento));
-    echo 'Evento inserido com sucesso!';
+    $email_evento = $_POST['emailEvento'];
+    $sql = $pdo->prepare("INSERT INTO `evento` VALUES (null, ?, ?,?,?)");
+    $sql->execute(array($evento, $data_evento, $hora_evento,$email_evento));
+    header("Refresh:0; url=../index.php");
   }
 }
+function alterarEvento($servername, $username, $password, $dbname)
+{
+  date_default_timezone_set('America/Sao_Paulo');
+  $pdo = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+  if (isset($_POST['acao'])) {
+    $evento = $_POST['evento'];
+    $data_evento = $_POST['data'];
+    $hora_evento = $_POST['hora'];
+    $email_evento = $_POST['email'];
+    $id=$_POST['id_evento'];
+    $sql = $pdo->prepare("UPDATE `evento`SET evento='$evento',data_evento='$data_evento',hora_evento='$hora_evento',email_evento='$email_evento'  WHERE id_evento='$id'");
+    if ($sql->execute()){
+    header("Refresh:0; url=../index.php");
+    }
+    
+  }
+}
+function excluirEvento($servername, $username, $password, $dbname,$id_evento)
+{
+  date_default_timezone_set('America/Sao_Paulo');
+  $pdo = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+     $id=$id_evento;
+    $sql = $pdo->prepare("DELETE FROM `evento`WHERE id_evento=?");
+    if ($sql->execute(array($id))){
+    header("Refresh:0; url=../index.php");
+    
+    }
+    
+}
+
+?>

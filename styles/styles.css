@@ -1,0 +1,10 @@
+tr {
+    text:bold;border: solid 2px black;
+}
+td {
+    text:bold;width:150px;border:1px solid black;
+}
+table {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}

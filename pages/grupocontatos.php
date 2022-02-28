@@ -21,7 +21,7 @@
         <form class="grupo"method="POST">
         <div class="mb-3">
             <label for="nome" class="form-label">Grupo de Contatos</label>
-            <input type="text" class="form-control" name="nomeGrupo" placeholder="Nome do Grupo">
+            <input type="text" class="form-control" name="nomeGrupo" placeholder="Nome do Grupo" required>
             <input type="submit" class="btn btn-primary mb-1"name="acao"<?php cadastrarGrupo($servername,$username,$password,$dbname,$_POST);?>value="Cadastrar Grupo"/>
         </div>
         </form>
