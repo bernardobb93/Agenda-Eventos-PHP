@@ -1,5 +1,6 @@
 # Agenda de Eventos
 Projeto de agenda de eventos em PHP com cadastro de contatos, eventos e grupos.
+O projeto final teria envio de avisos de eventos automatizado.
 
 ## Telas de exemplo:
 
